@@ -1,29 +1,40 @@
-import { MongoClient } from 'mongodb'
+import { Db, MongoClient } from "mongodb";
 
-const uri = process.env.MONGODB_URI
-const options = {
-  useUnifiedTopology: true,
-  useNewUrlParser: true,
-}
+const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_DB = process.env.MONGODB_DB;
 
-let client
-let clientPromise
+let cachedClient: MongoClient;
+let cachedDb: Db;
 
-if (!process.env.MONGODB_URI) {
-  throw new Error('Add Mongo URI to .env.local')
-}
-
-if (process.env.NODE_ENV === 'development') {
-Replacement).
-  if (!global._mongoClientPromise) {
-    client = new MongoClient(uri, options)
-    global._mongoClientPromise = client.connect()
+export async function connectToDatabase() {
+  if (cachedClient && cachedDb) {
+    return {
+      client: cachedClient,
+      db: cachedDb,
+    };
   }
-  clientPromise = global._mongoClientPromise
-} else {
-  client = new MongoClient(uri, options)
-  clientPromise = client.connect()
+
+  const opts = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  };
+
+  if (!MONGODB_URI) {
+    throw new Error("Define the MONGODB_URI environmental variable");
+  }
+  if (!MONGODB_DB) {
+    throw new Error("Define the MONGODB_DB environmental variable");
+  }
+
+  let client = new MongoClient(MONGODB_URI);
+  await client.connect();
+  let db = client.db(MONGODB_DB);
+
+  cachedClient = client;
+  cachedDb = db;
+
+  return {
+    client: cachedClient,
+    db: cachedDb,
+  };
 }
-
-export default clientPromise
-
