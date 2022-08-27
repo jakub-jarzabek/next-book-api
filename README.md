@@ -1,34 +1,145 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Api Reference
 
-## Getting Started
+## Auth
 
-First, run the development server:
+### `api/auth/register`
 
-```bash
-npm run dev
-# or
-yarn dev
+#### Create New User
+
+```
+METHOD:POST
+Content-Type: application/json
+Body:
+{
+login
+passoword
+}
+Return:
+{
+  {success:true}
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### `api/auth/login`
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+#### Login
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+```
+METHOD:POST
+Content-Type: application/json
+Body:
+{
+login
+passoword
+}
+Return:
+{
+  api_token
+}
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Books
 
-## Learn More
+### `api/books`
 
-To learn more about Next.js, take a look at the following resources:
+#### Get all books in database
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+METHOD:GET
+Authorization: api/books?api_token
+Return:
+{
+  [
+    {
+      _id,
+      author,
+      title,
+      release_date
+    }
+  ]
+}
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### `api/books/:id`
 
-## Deploy on Vercel
+#### Get single book
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+METHOD:GET
+Authorization: api/books/<id>?api_token
+Content-Type: application/json
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Return:
+{
+    {
+      _id,
+      author,
+      title,
+      release_date
+    }
+}
+```
+
+### `api/books/new`
+
+#### Add new book
+
+```
+METHOD:POST
+Authorization: api/books/new?api_token
+Content-Type: application/json
+Body:
+{
+author
+title
+release_date
+}
+Return:
+{
+_id
+author
+title
+release_date
+}
+```
+
+### `api/books/update/:id`
+
+#### Update exisitng book
+
+```
+METHOD:PUT
+Authorization: api/books/update/<id>?api_token
+Content-Type: application/json
+Body:
+{
+author
+title
+release_date
+}
+Return:
+{
+_id
+author
+title
+release_date
+}
+```
+
+### `api/books/delete/:id`
+
+#### Delete exisitng book
+
+```
+METHOD:DELETE
+Authorization: api/books/delete/<id>?api_token
+Content-Type: application/json
+Body:
+{
+author
+title
+release_date
+}
+Return:
+{success:true}
+```
