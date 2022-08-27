@@ -1,4 +1,19 @@
-# Api Reference
+- [Auth](#auth)
+  - [`api/auth/register`](#apiauthregister)
+    - [Create New User](#create-new-user)
+  - [`api/auth/login`](#apiauthlogin)
+    - [Login](#login)
+- [Books](#books)
+  - [`api/books`](#apibooks)
+    - [Get all books in database](#get-all-books-in-database)
+  - [`api/books/:id`](#apibooksid)
+    - [Get single book](#get-single-book)
+  - [`api/books/new`](#apibooksnew)
+    - [Add new book](#add-new-book)
+  - [`api/books/update/:id`](#apibooksupdateid)
+    - [Update exisitng book](#update-exisitng-book)
+  - [`api/books/delete/:id`](#apibooksdeleteid)
+    - [Delete exisitng book](#delete-exisitng-book)
 
 ## Auth
 
