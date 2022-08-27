@@ -7,6 +7,11 @@ export interface Book{
   title:string
   _id?:ObjectId
 }
+export interface User {
+  login:string,
+  password:string,
+  _id?:ObjectId
+}
 
 export interface ApiError {
   error:string
